@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+
+    hadoop:
+        image: mcapitanio/hadoop
+        networks:
+            - hadoop
+        volumes:
+            - hadoop_conf:/opt/hadoop/etc/hadoop
+            - hadoop_logs:/opt/hadoop/logs
+            - hadoop_hdfs:/hdfs
+        ports:
+            - "50070:50070"
+            - "50075:50075"
+            - "8020:8020"
+            - "8042:8042"
+            - "8088:8088"
+            - "8188:8188"
+            - "19888:19888"
+
+networks:
+    hadoop:
+        driver: bridge

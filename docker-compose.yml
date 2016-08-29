@@ -1,0 +1,64 @@
+version: "2"
+
+services:
+
+    zookeeper:
+        extends:
+            file: zookeeper.yml
+            service: zookeeper
+
+    hadoop:
+        extends:
+            file: hadoop.yml
+            service: hadoop
+        links:
+            - zookeeper
+
+    postgres:
+        image: postgres
+        networks:
+            - hadoop
+        ports:
+            - "15432:5432"
+        environment:
+            POSTGRES_PASSWORD: postgres
+
+    hive:
+        image: mcapitanio/hive
+        links:
+            - hadoop
+            - zookeeper
+            - postgres
+        networks:
+            - hadoop
+        volumes:
+            - hive_conf:/opt/hive/conf
+            - hive_logs:/opt/hive/logs
+        volumes_from:
+            - hadoop
+        environment:
+            PGPASSWORD: postgres
+        ports:
+            - "10000:10000"
+            - "10001:10001"
+            - "10002:10002"
+            - "10003:10003"
+            - "9083:9083"
+            - "50111:50111"
+            - "9999:9999"
+
+
+volumes:
+    zookeeper_conf:
+    zookeeper_logs:
+    zookeeper_data:
+    hadoop_conf:
+    hadoop_hdfs:
+    hadoop_logs:
+    hive_data:
+    hive_logs:
+    hive_conf:
+
+networks:
+    hadoop:
+        driver: bridge
