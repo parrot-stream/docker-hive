@@ -41,22 +41,42 @@ wait-for-it.sh localhost:9083 -t 120
 
 rc=$?
 if [ $rc -ne 0 ]; then
-    echo "Hive Metastore not ready! Exiting..."
+    echo -e "\n---------------------------------------"
+    echo -e "  Hive Metastore not ready! Exiting..."
+    echo -e "---------------------------------------"
     exit $rc
 fi
 
 supervisorctl start hiveserver2
 
 wait-for-it.sh localhost:10000 -t 120
-wait-for-it.sh localhost:10002 -t 120
-
 rc=$?
 if [ $rc -ne 0 ]; then
-    echo "HiveServer2 not ready! Exiting..."
+    echo -e "\n---------------------------------------"
+    echo -e "   HiveServer2 not ready! Exiting..."
+    echo -e "---------------------------------------"
+    exit $rc
+fi
+
+wait-for-it.sh localhost:10002 -t 120
+rc=$?
+if [ $rc -ne 0 ]; then
+    echo -e "\n---------------------------------------"
+    echo -e "   HiveServer2 not ready! Exiting..."
+    echo -e "---------------------------------------"
     exit $rc
 fi
 
 supervisorctl start webhcat
+
+wait-for-it.sh localhost:10002 -t 120
+rc=$?
+if [ $rc -ne 0 ]; then
+    echo -e "\n---------------------------------------"
+    echo -e "   WebHCat not ready! Exiting..."
+    echo -e "---------------------------------------"
+    exit $rc
+fi
 
 ip=`awk 'END{print $1}' /etc/hosts`
 

@@ -27,26 +27,20 @@ Run with Docker Compose:
 
     docker-compose -p docker up
 
+Stop with Docker Compose:
+
+    docker-compose -p docker down --remove-orphans
+
 Setting the project name to *docker* with the **-p** option is useful to share the named data volumes created with with the containers created with other docker-compose.yml configurations (for example the one of the [Hadoop Docker image]((https://hub.docker.com/r/mcapitanio/hadoop/))).
 
-Once started you'll be able to read the list of all the Hadoop Web GUIs urls, for example (the ip is non static!):
+Once started you'll be able to read the list of all the Hive Web UIs urls, for example (the ip is non static!):
 
-| **Hive Web UIs**          |**URL**                             |
-|:--------------------------|:-----------------------------------|
-| *Hadoop Name Node*        | http://172.17.0.3:50070            |
-| *Hadoop Data Node*        | http://172.17.0.3:50075            |
-| *YARN Node Manager*       | http://172.17.0.3:8042             |
-| *YARN Resource Manager*   | http://172.17.0.3:8088             |
-| *YARN Timeline History*   | http://172.17.0.3:8188             |
-| *MapReduce Job History*   | http://172.17.0.3:19888/jobhistory |
+| **Hive Web UIs**            |**URL**                             |
+|:----------------------------|:-----------------------------------|
+| *HiveServer2 Web Interface* | http://172.17.0.3:10002            |
 
-While the Hadoop Docker container is running, you can always get the urls' list with the script:
 
-    print-urls.sh
-
-included in the GitHub source repository.
-
-There are 3 named volumes defined:
+There are 2 named volumes defined:
 
 - **hive_conf** wich points to HIVE_CONF_DIR
 - **hive_logs** which points to HIVE_LOG_DIR

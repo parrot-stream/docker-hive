@@ -1,0 +1,18 @@
+<settings>
+	<proxies>
+		<proxy>
+		      <id>cntlm-http</id>
+		      <active>true</active>
+		      <protocol>http</protocol>
+		      <host>10.0.2.2</host>
+		      <port>3128</port>
+		</proxy>
+		<proxy>
+		      <id>cntlm-https</id>
+		      <active>true</active>
+		      <protocol>https</protocol>
+		      <host>10.0.2.2</host>
+		      <port>3128</port>
+		</proxy>
+	</proxies>
+</settings>
