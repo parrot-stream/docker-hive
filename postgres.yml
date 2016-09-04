@@ -3,7 +3,7 @@ version: "2"
 services:
 
     postgres:
-        image: postgres
+        image: mcapitanio/postgres:latest
         networks:
             - hadoop
         ports:
