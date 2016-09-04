@@ -6,6 +6,10 @@ USER root
 
 ENV HIVE_VER 2.1.0
 
+ENV http_proxy ${http_proxy}
+ENV https_proxy ${https_proxy}
+ENV no_proxy ${no_proxy}
+
 ENV HIVE_HOME /opt/hive
 ENV HIVE_CONF_DIR $HIVE_HOME/conf
 ENV HADOOP_HOME /opt/hadoop
@@ -28,21 +32,17 @@ WORKDIR /opt/docker
 RUN wget http://mirror.nohup.it/apache/hive/hive-$HIVE_VER/apache-hive-$HIVE_VER-bin.tar.gz
 RUN tar -xvf apache-hive-$HIVE_VER-bin.tar.gz -C ..; \
     mv ../apache-hive-$HIVE_VER-bin $HIVE_HOME
-RUN wget https://jdbc.postgresql.org/download/postgresql-9.4.1209.jre7.jar -O $HIVE_HOME/jdbc/postgresql-9.4.1209.jre7.jar
+RUN wget https://jdbc.postgresql.org/download/postgresql-9.4.1209.jre7.jar -O $HIVE_HOME/lib/postgresql-9.4.1209.jre7.jar
 COPY hive/ $HIVE_HOME/
 COPY ./etc /etc
 
 RUN chmod +x $HIVE_HOME/bin/*.sh
 
-RUN useradd -p $(echo "hdfs" | openssl passwd -1 -stdin) hdfs; \
-    useradd -p $(echo "hive" | openssl passwd -1 -stdin) hive; \
-    groupadd supergroup; \
-    groupadd hdfs; \
-    usermod -a -G supergroup hdfs; \
+RUN useradd -p $(echo "hive" | openssl passwd -1 -stdin) hive; \
     usermod -a -G supergroup hive; \
-    usermod -a -G hdfs hive; 
+    usermod -a -G hdfs hive;
 
-EXPOSE 9083 9999 10000 10002 50111
+EXPOSE 9083 10000 10002 50111
 
 VOLUME ["/opt/hive/conf", "/opt/hive/logs"]
 

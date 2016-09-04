@@ -26,6 +26,9 @@ if [ $rc -ne 0 ]; then
 	exit $rc
 fi
 
+hdfs dfsadmin -safemode leave
+hdfs fsck /
+
 hdfs dfs -mkdir -p /tmp
 hdfs dfs -mkdir -p /user/hive/warehouse
 hdfs dfs -chmod g+w /tmp
@@ -37,7 +40,7 @@ psql -h postgres -U postgres -c "CREATE DATABASE metastore;" 2>/dev/null
 
 supervisorctl start hcat
 
-wait-for-it.sh localhost:9083 -t 120
+wait-for-it.sh localhost:9083 -t 240
 
 rc=$?
 if [ $rc -ne 0 ]; then
@@ -49,7 +52,7 @@ fi
 
 supervisorctl start hiveserver2
 
-wait-for-it.sh localhost:10000 -t 120
+wait-for-it.sh localhost:10000 -t 240
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n---------------------------------------"
@@ -58,7 +61,7 @@ if [ $rc -ne 0 ]; then
     exit $rc
 fi
 
-wait-for-it.sh localhost:10002 -t 120
+wait-for-it.sh localhost:10002 -t 240
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n---------------------------------------"
@@ -69,7 +72,7 @@ fi
 
 supervisorctl start webhcat
 
-wait-for-it.sh localhost:10002 -t 120
+wait-for-it.sh localhost:10002 -t 240
 rc=$?
 if [ $rc -ne 0 ]; then
     echo -e "\n---------------------------------------"
@@ -84,4 +87,5 @@ echo -e "\n\n-------------------------------------------------------------------
 echo -e "You can now access to the following Hive Web UIs:"
 echo -e ""
 echo -e "HiveServer2 Web Interface:		http://$ip:10002"
+echo -e "\nMantainer:   Matteo Capitanio <matteo.capitanio@gmail.com>"
 echo -e "--------------------------------------------------------------------------------\n\n"

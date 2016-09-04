@@ -40,5 +40,4 @@
     <name>hive.server2.webui.port</name>
     <value>10002</value>
   </property>
-</property>
 </configuration>
