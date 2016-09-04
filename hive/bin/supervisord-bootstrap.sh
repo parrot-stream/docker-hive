@@ -26,9 +26,6 @@ if [ $rc -ne 0 ]; then
 	exit $rc
 fi
 
-hdfs dfsadmin -safemode leave
-hdfs fsck /
-
 hdfs dfs -mkdir -p /tmp
 hdfs dfs -mkdir -p /user/hive/warehouse
 hdfs dfs -chmod g+w /tmp
