@@ -15,19 +15,15 @@ services:
             - zookeeper
 
     postgres:
-        image: postgres
-        networks:
-            - hadoop
-        ports:
-            - "15432:5432"
-        environment:
-            POSTGRES_PASSWORD: postgres
+        extends:
+            file: postgres.yml
+            service: postgres
 
     hive:
         build:
             context: .
             dockerfile: Dockerfile
-        image: mcapitanio/hive:latest
+        image: mcapitanio/hive:1.2.1
         links:
             - hadoop
             - zookeeper
@@ -61,6 +57,7 @@ volumes:
     hive_data:
     hive_logs:
     hive_conf:
+    postgres_data:
 
 networks:
     hadoop:

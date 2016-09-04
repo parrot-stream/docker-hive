@@ -4,7 +4,7 @@ MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
 USER root
 
-ENV HIVE_VER 2.1.0
+ENV HIVE_VER 1.2.1
 
 ENV http_proxy ${http_proxy}
 ENV https_proxy ${https_proxy}
