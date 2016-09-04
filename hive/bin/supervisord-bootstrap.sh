@@ -11,12 +11,13 @@ if [ $rc -ne 0 ]; then
 fi
 
 wait-for-it.sh hadoop:8020 -t 120
-
 rc=$?
 if [ $rc -ne 0 ]; then
     echo "HDFS not ready! Exiting..."
 	exit $rc
 fi
+
+hdfs dfsadmin -safemode leave
 
 wait-for-it.sh postgres:5432 -t 120
 
