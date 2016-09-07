@@ -22,8 +22,10 @@ ENV WEBHCAT_PID_DIR /opt/hive/logs
 ENV PATH $HIVE_HOME/bin:$PATH
 
 # Install needed packages
-RUN yum clean all; yum update -y; yum clean all
-RUN yum install -y python-setuptools postgresql
+RUN yum clean all; \
+    yum update -y; \
+    yum install -y python-setuptools postgresql; \
+    yum clean all
 RUN easy_install supervisor
 
 WORKDIR /opt/docker
