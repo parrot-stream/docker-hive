@@ -79,11 +79,9 @@ if [ $rc -ne 0 ]; then
     exit $rc
 fi
 
-ip=`awk 'END{print $1}' /etc/hosts`
-
 echo -e "\n\n--------------------------------------------------------------------------------"
 echo -e "You can now access to the following Hive Web UIs:"
 echo -e ""
-echo -e "HiveServer2 Web Interface:		http://$ip:10002"
+echo -e "HiveServer2 Web Interface:		http://localhost:10002"
 echo -e "\nMantainer:   Matteo Capitanio <matteo.capitanio@gmail.com>"
 echo -e "--------------------------------------------------------------------------------\n\n"
