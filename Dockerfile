@@ -6,10 +6,6 @@ USER root
 
 ENV HIVE_VER 2.1.0
 
-ENV http_proxy ${http_proxy}
-ENV https_proxy ${https_proxy}
-ENV no_proxy ${no_proxy}
-
 ENV HIVE_HOME /opt/hive
 ENV HIVE_CONF_DIR $HIVE_HOME/conf
 ENV HADOOP_HOME /opt/hadoop

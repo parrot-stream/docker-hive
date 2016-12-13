@@ -20,6 +20,9 @@ services:
             service: postgres
 
     hive:
+        build:
+            context: .
+            dockerfile: Dockerfile
         image: mcapitanio/hive:latest
         links:
             - hadoop
