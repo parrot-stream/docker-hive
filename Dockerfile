@@ -4,7 +4,7 @@ MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
 USER root
 
-ENV HIVE_VER 2.1.0
+ENV HIVE_VER 2.1.1
 
 ENV HIVE_HOME /opt/hive
 ENV HIVE_CONF_DIR $HIVE_HOME/conf
@@ -27,7 +27,7 @@ RUN easy_install supervisor
 WORKDIR /opt/docker
 
 # Apache Hive
-RUN wget http://mirror.nohup.it/apache/hive/hive-$HIVE_VER/apache-hive-$HIVE_VER-bin.tar.gz
+RUN wget http://apache.panu.it/hive/hive-$HIVE_VER/apache-hive-$HIVE_VER-bin.tar.gz
 RUN tar -xvf apache-hive-$HIVE_VER-bin.tar.gz -C ..; \
     mv ../apache-hive-$HIVE_VER-bin $HIVE_HOME
 RUN wget https://jdbc.postgresql.org/download/postgresql-9.4.1209.jre7.jar -O $HIVE_HOME/lib/postgresql-9.4.1209.jre7.jar
