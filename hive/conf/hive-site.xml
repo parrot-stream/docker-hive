@@ -40,4 +40,9 @@
     <name>hive.server2.webui.port</name>
     <value>10002</value>
   </property>
+  <property>
+    <name>hive.zookeeper.quorum</name>
+    <description>Zookeeper quorum used by Hive's Table Lock Manager</description>
+    <value>zookeeper</value>
+  </property>
 </configuration>

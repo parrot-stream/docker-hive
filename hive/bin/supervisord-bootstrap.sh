@@ -36,6 +36,8 @@ hdfs dfs -chown -R hdfs:supergroup /user
 
 psql -h postgres -U postgres -c "CREATE DATABASE metastore;" 2>/dev/null
 
+$HIVE_HOME/bin/schematool -dbType postgres -initSchema
+
 supervisorctl start hcat
 
 wait-for-it.sh localhost:9083 -t 240
