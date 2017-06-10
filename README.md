@@ -48,4 +48,3 @@ There are 2 named volumes defined:
 ### Available tags:
 
 - Apache Hive 2.1.1 ([latest](https://github.com/mcapitanio/docker-hadoop/blob/latest/Dockerfile), [2.1.1](https://github.com/mcapitanio/docker-hive/blob/2.1.1/Dockerfile))
-- Apache Hive 2.1.0 ([2.1.0](https://github.com/mcapitanio/docker-hive/blob/2.1.0/Dockerfile))
