@@ -4,7 +4,7 @@ MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
 USER root
 
-ENV HIVE_VER 1.2.1
+ENV HIVE_VER 1.2.2
 
 ENV HIVE_HOME /opt/hive
 ENV HIVE_CONF_DIR $HIVE_HOME/conf

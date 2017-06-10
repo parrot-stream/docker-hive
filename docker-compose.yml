@@ -20,7 +20,7 @@ services:
             service: postgres
 
     hive:
-        image: mcapitanio/hive:1.2.1
+        image: mcapitanio/hive:1.2.2
         links:
             - hadoop
             - zookeeper
