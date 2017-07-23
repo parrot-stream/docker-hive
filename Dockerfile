@@ -1,47 +1,45 @@
-FROM mcapitanio/hadoop
+FROM centos
 
 MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
+#ENV HIVE_VER 1.1.0+cdh5.11.1
+#ENV HADOOP_VER 2.6.0+cdh5.11.1
+
 USER root
 
-ENV HIVE_VER 2.1.1
+#RUN apt-get update -y
+#RUN apt-get upgrade -y
+#RUN apt-get install -y wget apt-transport-https python-setuptools openjdk-8-jdk apt-utils sudo postgresql libpostgresql-jdbc-java
+#RUN easy_install supervisor
+#RUN wget http://archive.cloudera.com/cdh5/one-click-install/trusty/amd64/cdh5-repository_1.0_all.deb
+#RUN dpkg -i cdh5-repository_1.0_all.deb
+#RUN apt-get update -y
+#RUN apt-get install -y --allow-unauthenticated hive=$HIVE_VER* hive-hbase=$HIVE_VER* hive-jdbc=$HIVE_VER* hive-metastore=$HIVE_VER* hive-server2=$HIVE_VER*
+#RUN ln -s /usr/share/java/postgresql-jdbc4.jar /usr/lib/hive/lib/postgresql-jdbc4.jar
 
-ENV HIVE_HOME /opt/hive
-ENV HIVE_CONF_DIR $HIVE_HOME/conf
-ENV HADOOP_HOME /opt/hadoop
-ENV HADOOP_CONF_DIR /opt/hadoop/etc/hadoop
-ENV HCAT_LOG_DIR /opt/hive/logs
-ENV HCAT_PID_DIR /opt/hive/logs
-ENV WEBHCAT_LOG_DIR /opt/hive/logs
-ENV WEBHCAT_PID_DIR /opt/hive/logs
-
-ENV PATH $HIVE_HOME/bin:$PATH
-
-# Install needed packages
-RUN yum clean all; \
-    yum update -y; \
-    yum install -y python-setuptools postgresql; \
-    yum clean all
+RUN yum update -y
+RUN yum install -y wget python-setuptools java-1.8.0-openjdk-devel sudo curl vim
 RUN easy_install supervisor
+ADD cloudera-cdh5.repo /etc/yum.repos.d/
+RUN rpm --import https://archive.cloudera.com/cdh5/redhat/5/x86_64/cdh/RPM-GPG-KEY-cloudera
+RUN yum install -y hive hive-hbase hive-jdbc hive-metastore hive-server2
 
-WORKDIR /opt/docker
+WORKDIR /
 
-# Apache Hive
-RUN wget http://apache.panu.it/hive/hive-$HIVE_VER/apache-hive-$HIVE_VER-bin.tar.gz
-RUN tar -xvf apache-hive-$HIVE_VER-bin.tar.gz -C ..; \
-    mv ../apache-hive-$HIVE_VER-bin $HIVE_HOME
-RUN wget https://jdbc.postgresql.org/download/postgresql-9.4.1209.jre7.jar -O $HIVE_HOME/lib/postgresql-9.4.1209.jre7.jar
-COPY hive/ $HIVE_HOME/
-COPY ./etc /etc
+ADD etc/supervisord.conf /etc/
+ADD etc/hive/conf/*.xml /etc/hive/conf/
+ADD etc/hadoop/conf/*.xml /etc/hadoop/conf/
+ADD bin/supervisord-bootstrap.sh ./
+ADD bin/wait-for-it.sh ./
+RUN chmod +x ./*.sh
 
-RUN chmod +x $HIVE_HOME/bin/*.sh
+#RUN useradd -p $(echo "impala" | openssl passwd -1 -stdin) impala
+#RUN groupadd supergroup; \
+#    usermod -a -G supergroup impala; \
+#    usermod -a -G hdfs impala; \
+#    usermod -a -G supergroup hive; \
+#    usermod -a -G hdfs hive
 
-RUN useradd -p $(echo "hive" | openssl passwd -1 -stdin) hive; \
-    usermod -a -G supergroup hive; \
-    usermod -a -G hdfs hive;
-
-EXPOSE 9083 10000 10002 50111
-
-VOLUME ["/opt/hive/conf", "/opt/hive/logs"]
+EXPOSE 9083 10000 10002
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
