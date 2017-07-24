@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: parrotstream/hive:latest
+    image: parrotstream/hive:1.1.0-cdh5.11.1
     external_links:
     - hadoop
     - zookeeper
