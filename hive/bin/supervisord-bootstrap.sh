@@ -17,8 +17,6 @@ if [ $rc -ne 0 ]; then
 	exit $rc
 fi
 
-hdfs dfsadmin -safemode leave
-
 wait-for-it.sh postgres:5432 -t 120
 
 rc=$?
@@ -27,14 +25,9 @@ if [ $rc -ne 0 ]; then
 	exit $rc
 fi
 
-hdfs dfs -mkdir -p /tmp
-hdfs dfs -mkdir -p /user/hive/warehouse
-hdfs dfs -chmod g+w /tmp
-hdfs dfs -chmod g+w /user/hive/warehouse
-hdfs dfs -chown -R hdfs:supergroup /tmp
-hdfs dfs -chown -R hdfs:supergroup /user
-
 psql -h postgres -U postgres -c "CREATE DATABASE metastore;" 2>/dev/null
+
+$HIVE_HOME/bin/schematool -dbType postgres -initSchema
 
 supervisorctl start hcat
 

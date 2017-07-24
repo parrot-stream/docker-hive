@@ -1,4 +1,4 @@
-FROM mcapitanio/hadoop
+FROM parrotstream/hadoop
 
 MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
@@ -20,9 +20,8 @@ ENV PATH $HIVE_HOME/bin:$PATH
 # Install needed packages
 RUN yum clean all; \
     yum update -y; \
-    yum install -y python-setuptools postgresql; \
+    yum install -y postgresql; \
     yum clean all
-RUN easy_install supervisor
 
 WORKDIR /opt/docker
 
