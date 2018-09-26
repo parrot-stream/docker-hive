@@ -29,15 +29,6 @@ if [ $rc -ne 0 ]; then
     exit $rc
 fi
 
-#sudo -u hdfs hdfs dfs -mkdir -p /tmp
-#sudo -u hdfs hdfs dfs -mkdir -p /user/
-#sudo -u hdfs hdfs dfs -mkdir -p /user/hive
-#sudo -u hdfs hdfs dfs -mkdir -p /user/hive/warehouse
-#sudo -u hdfs hdfs dfs -chmod g+w /tmp
-#sudo -u hdfs hdfs dfs -chmod g+w /user/hive/warehouse
-#sudo -u hdfs hdfs dfs -chown -R hdfs:supergroup /tmp
-#sudo -u hdfs hdfs dfs -chown -R hdfs:supergroup /user
-
 psql -h postgres -U postgres -c "CREATE DATABASE metastore;" 2>/dev/null
 
 /usr/lib/hive/bin/schematool -dbType postgres -initSchema
