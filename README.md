@@ -30,6 +30,6 @@ Setting the project name to *parrot* with the **-p** option is useful to share t
 
 ### Available tags:
 
-- Apache Hive 2.1.1 ([latest](https://github.com/parrot-stream/docker-hive/blob/latest/Dockerfile), [2.1.1](https://github.com/parrot-stream/docker-hive/blob/2.1.1/Dockerfile))
+- Apache Hive 2.3.3 ([latest](https://github.com/parrot-stream/docker-hive/blob/latest/Dockerfile), [2.3.3](https://github.com/parrot-stream/docker-hive/blob/2.3.3/Dockerfile))
 - Apache Hive 1.2.2 ([1.2.2](https://github.com/parrot-stream/docker-hive/blob/1.2.2/Dockerfile))
 - Apache Hive 1.1.0-cdh5.11.1 ([1.1.0-cdh5.11.1](https://github.com/parrot-stream/docker-hive/blob/1.1.0-cdh5.11.1/Dockerfile))
