@@ -1,6 +1,10 @@
 <configuration>
 
   <property>
+    <name>hive.server2.authentication</name>
+    <value>NOSASL</value>
+  </property>
+  <property>
     <name>hive.support.concurrency</name>
     <value>true</value>
   </property>
@@ -39,13 +43,5 @@
   <property>
     <name>hive.server2.webui.port</name>
     <value>10002</value>
-  </property>
-  <property>
-    <name>hive.metastore.schema.verification</name>
-    <value>true</value>
-  </property>
-  <property>
-    <name>hive.zookeeper.quorum</name>
-    <value>zookeeper</value>
   </property>
 </configuration>
