@@ -36,7 +36,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: parrotstream/hive:latest
+    image: parrotstream/hive:3.1.0
     links:
     - hadoop
     - zookeeper
