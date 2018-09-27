@@ -8,12 +8,10 @@ ENV HIVE_VER 2.3.3
 
 ENV HIVE_HOME /opt/hive
 ENV HIVE_CONF_DIR $HIVE_HOME/conf
-#ENV HADOOP_HOME /opt/hadoop
-#ENV HADOOP_CONF_DIR /opt/hadoop/etc/hadoop
 ENV HCAT_LOG_DIR $HIVE_HOME/logs
-ENV HCAT_PID_DIR HIVE_HOME/
-ENV WEBHCAT_LOG_DIR HIVE_HOME/logs
-ENV WEBHCAT_PID_DIR HIVE_HOME/
+ENV HCAT_PID_DIR $HIVE_HOME/
+ENV WEBHCAT_LOG_DIR $HIVE_HOME/logs
+ENV WEBHCAT_PID_DIR $HIVE_HOME/
 
 ENV PATH $HIVE_HOME/bin:$PATH
 
@@ -29,7 +27,7 @@ WORKDIR /opt/docker
 RUN wget http://it.apache.contactlab.it/hive/hive-$HIVE_VER/apache-hive-$HIVE_VER-bin.tar.gz
 RUN tar -xvf apache-hive-$HIVE_VER-bin.tar.gz -C ..; \
     mv ../apache-hive-$HIVE_VER-bin $HIVE_HOME
-RUN wget https://jdbc.postgresql.org/download/postgresql-9.4.1209.jre7.jar -O $HIVE_HOME/lib/postgresql-9.4.1209.jre7.jar
+RUN wget https://jdbc.postgresql.org/download/postgresql-42.2.5.jar -O $HIVE_HOME/lib/postgresql-42.2.5.jar
 COPY hive/ $HIVE_HOME/
 COPY ./etc /etc
 

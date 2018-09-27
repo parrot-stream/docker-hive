@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm /opt/hive/logs/*.pid 2> /dev/null
+rm $HIVE_HOME/logs/*.pid 2> /dev/null
 
 wait-for-it.sh zookeeper:2181 -t 120
 
