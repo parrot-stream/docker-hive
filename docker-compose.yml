@@ -1,52 +1,24 @@
 version: '3'
 services:
   postgres:
-    image: parrotstream/postgres:latest
-    networks:
-    - parrot
+    container_name: postgres
+    image: parrotstream/postgres:10.5
     ports:
     - 5432:5432
     environment:
       POSTGRES_PASSWORD: postgres
     privileged: true
-  zookeeper:
-    image: parrotstream/zookeeper:latest
-    ports:
-    - 2181:2181
-    - 2888:2888
-    - 3888:3888
-    - 8080:8080
-    networks:
-    - parrot
-  hadoop:
-    image: parrotstream/hadoop:latest
-    networks:
-    - parrot
-    external_links:
-    - zookeeper
-    volumes:
-    - hadoop_conf:/etc/hadoop/conf
-    ports:
-    - 9870:9870
-    - 9864:9864
-    - 9820:9820
-    - 8042:8042
-    - 8088:8088
-    - 8188:8188
-    - 19888:19888
   hive:
+    container_name: hive
     build:
       context: .
       dockerfile: Dockerfile
     image: parrotstream/hive:1.1.0-cdh5.11.1
-    links:
+    external_links:
     - hadoop
     - zookeeper
+    depends_on:
     - postgres
-    networks:
-    - parrot
-    volumes:
-    - hive_conf:/opt/hive/conf
     environment:
       PGPASSWORD: postgres
     ports:
@@ -57,12 +29,8 @@ services:
     - 9083:9083
     - 50111:50111
     - 9999:9999
-volumes:
-  hadoop_conf: null
-  hive_conf: null
 networks:
   default:
     external:
-      name: parrot
-  parrot:
-    driver: bridge
+      name: parrot_default
+
