@@ -26,7 +26,6 @@ Stop with Docker Compose:
 
     docker-compose -p parrot down
 
-Setting the project name to *parrot* with the **-p** option is useful to share the network created with the containers coming from other Parrot docker-compose.yml configurations.
 
 ### Available tags:
 

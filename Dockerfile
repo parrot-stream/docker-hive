@@ -1,4 +1,4 @@
-FROM parrotstream/hadoop
+FROM parrotstream/hadoop:3.0.0-cdh6.0.0
 
 MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.com>
 
@@ -42,7 +42,6 @@ COPY ./etc /etc
 RUN chmod +x $HIVE_HOME/bin/*.sh
 
 RUN useradd -p $(echo "hive" | openssl passwd -1 -stdin) hive; \
-    usermod -a -G supergroup hive; \
     usermod -a -G hdfs hive;
 
 EXPOSE 9083 10000 10002 50111
